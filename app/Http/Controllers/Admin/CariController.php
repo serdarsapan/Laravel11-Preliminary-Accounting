@@ -21,12 +21,13 @@ class CariController extends Controller
 
     public function create(Request $request)
     {
-        return view('admin.cari.edit');
+        $cari = Cari::get();
+        return view('admin.cari.edit')->with('cari',$cari);
     }
 
     public function store(CariRequest $request)
     {
-       Cari::create([
+        Cari::create([
             'cariStatus' => $request->cariStatus,
             'code' => $request->code,
             'name' => $request->name,
@@ -79,16 +80,16 @@ class CariController extends Controller
 
     public function edit($id)
     {
-        $car = car::find($id);
+        $cari = Cari::find($id);
 
-        return view('admin.cari.edit', compact('car'));
+        return view('admin.cari.edit', compact('cari'));
     }
 
     public function update(CariRequest $request, $id)
     {
-        $car = Cari::find($id);
-        if ($car) {
-            $car->update([
+        $cari = Cari::find($id);
+        if ($cari) {
+            $cari->update([
                 'cariStatus' => $request->cariStatus,
                 'code' => $request->code,
                 'name' => $request->name,
@@ -143,11 +144,16 @@ class CariController extends Controller
 
     public function status(Request $request)
     {
-        $status = $request->cariStatus;
-        $updateCheck = $status == "false" ? '0' : '1';
+        $cariStatus = $request->cariStatus;
+        $updateCheck = $cariStatus == "false" ? '0' : '1';
 
         Cari::where('id',$request->id)->update(['status'=> $updateCheck]);
 
-        return response(['error'=>false,'status'=>$status]);
+        return response(['error'=>false,'cariStatus'=>$cariStatus]);
+    }
+
+    public function cariDetay()
+    {
+        return view('admin.cariDetay.edit');
     }
 }

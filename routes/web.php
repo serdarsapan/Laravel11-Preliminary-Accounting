@@ -31,6 +31,9 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function () {
     Route::get('/cari/edit/{id}', '\App\Http\Controllers\Admin\CariController@edit')->name('cari.edit');
     Route::put('/cari/{id}', '\App\Http\Controllers\Admin\CariController@update')->name('cari.update');
     Route::delete('/cari/{id}', '\App\Http\Controllers\Admin\CariController@destroy')->name('cari.destroy');
+
+    //Cari Detay
+    Route::get('/cariDetay', '\App\Http\Controllers\Admin\CariController@cariDetay')->name('cariDetay');
     
     //Satış Fatura
     Route::get('/satis', '\App\Http\Controllers\Admin\SatisController@index')->name('satis.index');
