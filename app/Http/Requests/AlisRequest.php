@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GiderRequest extends FormRequest
+class AlisRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -23,18 +23,16 @@ class GiderRequest extends FormRequest
     {
         return [
             'cari' => 'required|max:255',
-            'giderTip' => 'required',
-            'araToplam' => 'required|integer',
-            'faturaTutar' => 'required|integer'
+            'urunHizmet' => 'required|max:255',
+            'miktar' => 'required|integer|max:12',
         ];
     }
-    public function messages():array
+    public function messages(): array
     {
         return [
-            'cari' => 'Cari Alan Boş Bırakılamaz.',
-            'giderTip' => 'Gider Tipi Seçiniz.',
-            'araToplam' => 'Ara Toplam Giriniz.',
-            'faturaTutar' => 'Fatura Tutar İçin Gerekli Alanları Doldurunuz.'
+            'cari' => 'Cari Alanı Boş Bırakılamaz.',
+            'urunHizmet' => 'Ürün/Hizmet Seçiniz!',
+            'miktar' => 'Miktar Seçilmelidir.'
         ];
     }
 }

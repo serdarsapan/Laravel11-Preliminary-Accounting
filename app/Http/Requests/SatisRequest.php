@@ -22,7 +22,17 @@ class SatisRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'cari' => 'required|max:255',
+            'urunHizmet' => 'required|max:255',
+            'miktar' => 'required|integer|max:12'
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'cari' => 'Cari Alanı Boş Bırakılamaz.',
+            'urunHizmet' => 'Ürün/Hizmet Seçiniz!',
+            'miktar' => 'Miktar Seçilmelidir.'
         ];
     }
 }

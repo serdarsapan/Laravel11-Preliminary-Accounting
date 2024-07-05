@@ -33,12 +33,13 @@
                             @method('PUT')
                         @endif
                             <div class="form-group">
-                            <label for="cari" class="label-spe">Cari*</label>
+                            <label for="cari" class="label-spe">Cari</label>
+                            <sup style="font-style: normal; font-weight: bold; color: #428bca">*</sup>
                             <input type="text" class="form-control" id="cari" name="cari"
                                    value="{{ $satis->cari ?? '' }}" onblur="path();">
                         </div>
                         <div class="form-group mt-2">
-                            <label for="cariAdres" class="label-spe">Cari Adresi*</label>
+                            <label for="cariAdres" class="label-spe">Cari Adresi</label>
                             <input type="text" class="form-control" id="cariAdres" name="cariAdres"
                                    value="{{ $satis->cariAdres ?? '' }}" onblur="path();">
                         </div>
@@ -132,6 +133,9 @@
                                 @endforeach
                             </select>
                             </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 form-group mt-3">
+                        <a href="{{ route('blogs.create') }}" class="btn btn-info">Ürün / Hizmet Ekle</a>
+                        </div>
                         </div>
                         <div class="row mt-3 calculate">
                             <div class="col-md-2 col-sm-6 col-xs-12 form-group">
@@ -147,7 +151,6 @@
                             </div>
                             <div class="col-md-2 col-sm-6 col-xs-12 form-group">
                                 <label for="kdv" class="label-spe">KDV Oranı</label>
-                                <sup style="font-style: normal; font-weight: bold; color: #428bca">*</sup>
                                 <select class="form-control" name="kdv" id="kdv">
                                     <option value="0">KDV %0</option>
                                     <option value="1">KDV %1</option>
@@ -159,19 +162,16 @@
                             </div>
                             <div class="col-md-2 col-sm-6 col-xs-12 form-group">
                                 <label for="sumKdv" class="label-spe">Toplam KDV Tutarı</label>
-                                <sup style="font-style: normal; font-weight: bold; color: #428bca">*</sup>
                                 <input type="text" class="form-control" name="sumKdv" id="sumKdv" 
                                       placeholder="0.00" value="{!! $satis->sumKdv ?? '' !!}" readonly/>
                             </div>
                             <div class="col-md-2 col-sm-6 col-xs-12 form-group">
                                 <label for="excSumKdv" class="label-spe">Toplam (KDV Hariç)</label>
-                                <sup style="font-style: normal; font-weight: bold; color: #428bca">*</sup>
                                 <input type="text" class="form-control" name="excSumKdv" id="excSumKdv" 
                                       placeholder="0.00" value="{!! $satis->excSumKdv ?? '' !!}" />
                             </div>
                             <div class="col-md-2 col-sm-6 col-xs-12 form-group">
                                 <label for="incSumKdv" class="label-spe">Toplam (KDV Dahil)</label>
-                                <sup style="font-style: normal; font-weight: bold; color: #428bca">*</sup>
                                 <input type="text" class="form-control" name="incSumKdv" id="incSumKdv" 
                                       placeholder="0.00" value="{!! $satis->incSumKdv ?? '' !!}" />
                             </div>

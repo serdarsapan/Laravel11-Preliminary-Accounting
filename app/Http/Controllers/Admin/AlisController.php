@@ -56,7 +56,6 @@ class AlisController extends Controller
         'kdv' => $request->kdv,
         ]);
 
-       $alis->blogs()->sync($request->blog);
 
         return back()->with('success', 'Satış created successfully');
     }
@@ -78,12 +77,19 @@ class AlisController extends Controller
 
     public function update(SatisRequest $request, $id)
     {
+        $duzenlemeTarihParts = explode('/', $request->duzenlemeTarih);
+        if (count($duzenlemeTarihParts) === 3) {
+            $duzenlemeTarih = $duzenlemeTarihParts[2] . '-' . $duzenlemeTarihParts[1] . '-' . $duzenlemeTarihParts[0];
+        } else {
+            return back()->withErrors(['duzenlemeTarih' => 'Invalid date format.']);
+        }
+
         $alis = Alis::find($id);
         if ($alis) {
             $alis->update([
                 'cari' => $request->cari,
                 'cariAdres' => $request->cariAdres,
-                'duzenlemeTarih' => $request->duzenlemeTarih,
+                'duzenlemeTarih' => $duzenlemeTarih,
                 'duzenlemeSaat' => $request->duzenlemeSaat,
                 'seriNo' => $request->seriNo,
                 'odemeStatus' => $request->odemeStatus,
@@ -96,7 +102,6 @@ class AlisController extends Controller
                 'kdv' => $request->kdv,
             ]);
 
-            $alis->blogs()->sync($request->blog);
 
             return redirect()->route('alis.index')->with('success', 'Satış updated successfully');
         } else {

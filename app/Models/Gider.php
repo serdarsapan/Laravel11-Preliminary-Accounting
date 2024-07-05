@@ -22,7 +22,10 @@ class Gider extends Model
         'tags',
         'description',
         'giderTip',
-        'faturaTutar',
+        'araToplam',
+        'kdv',
+        'digerVergi',
+        'faturaTutar'
     ];
 
     public function categories()

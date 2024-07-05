@@ -51,9 +51,9 @@
                                                 </label>
                                             </div>
                                         </td>
-                                        <td><a href="{{ route('gider.edit', $gider->id) }}" class="btn btn-primary">Edit</a></td>
+                                        <td><a href="{{ route('gider.edit', $gid->id) }}" class="btn btn-primary">Edit</a></td>
                                         <td>
-                                            <form action="{{ route('gider.destroy', $gider->id) }}" method="POST">
+                                            <form action="{{ route('gider.destroy', $gid->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger bg-danger">Delete</button>

@@ -23,6 +23,9 @@ return new class extends Migration
             $table->string('sonOdeme');
             $table->string('tags')->nullable();
             $table->text('description')->nullable();
+            $table->decimal('araToplam', 12, 2);
+            $table->decimal('kdv', 5, 2)->default(0);
+            $table->decimal('digerVergi', 12, 2);
             $table->decimal('faturaTutar', 12, 2);
             $table->timestamps();
         });

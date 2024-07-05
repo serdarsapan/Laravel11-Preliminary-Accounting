@@ -57,6 +57,9 @@ class GiderController extends Controller
         'tags' => $request->tags,
         'description' => $request->description,
         'giderTip' => $request->giderTip,
+        'araToplam' => $request->araToplam,
+        'kdv' => $request->kdv,
+        'digerVergi' => $request->digerVergi,
         'faturaTutar' => $request->faturaTutar,
         'sonOdeme' => $request->sonOdeme,
         ]);
@@ -73,27 +76,44 @@ class GiderController extends Controller
 
     public function edit($id)
     {
+        $account = Account::all();
         $gider = Gider::find($id);
-        $selectedCategory = GiderCategory::whereGiderId($id)->pluck('category_id')->toArray();
-        $categories = Category::pluck('name','id');
+        $categories = Category::all();
+        $category = Category::pluck('name','id');
+        $selectedCategory = GiderCategory::whereGiderId('id', $id)->pluck('category_id')->toArray();
 
-        return view('admin.gider.edit', compact('gider','selectedCategory','categories'));
+        return view('admin.gider.edit', compact('gider','selectedCategory','categories', 'category', 'account'));
     }
 
     public function update(GiderRequest $request, $id)
     {
+        $duzenlemeTarihParts = explode('/', $request->duzenlemeTarih);
+        if (count($duzenlemeTarihParts) === 3) {
+            $duzenlemeTarih = $duzenlemeTarihParts[2] . '-' . $duzenlemeTarihParts[1] . '-' . $duzenlemeTarihParts[0];
+        } else {
+            return back()->withErrors(['duzenlemeTarih' => 'Invalid date format.']);
+        }
+        $odemeTarihParts = explode('/', $request->odemeTarih);
+        if (count($odemeTarihParts) === 3) {
+            $odemeTarih = $odemeTarihParts[2] . '-' . $odemeTarihParts[1] . '-' . $odemeTarihParts[0];
+        } else {
+            return back()->withErrors(['odemeTarih' => 'Invalid date format.']);
+        }
         $gider = Gider::find($id);
         if ($gider) {
             $gider->update([
                 'cari' => $request->cari,
-                'duzenlemeTarih' => $request->duzenlemeTarih,
+                'duzenlemeTarih' => $duzenlemeTarih,
                 'seriNo' => $request->seriNo,
                 'odemeStatus' => $request->odemeStatus,
                 'bankName' => $request->bankName,
-                'odemeTarih' => $request->odemeTarih,
+                'odemeTarih' => $odemeTarih,
                 'tags' => $request->tags,
                 'description' => $request->description,
                 'giderTip' => $request->giderTip,
+                'araToplam' => $request->araToplam,
+                'kdv' => $request->kdv,
+                'digerVergi' => $request->digerVergi,
                 'faturaTutar' => $request->faturaTutar,
                 'sonOdeme' => $request->sonOdeme,
             ]);

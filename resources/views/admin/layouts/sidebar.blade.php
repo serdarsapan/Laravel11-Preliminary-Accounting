@@ -10,7 +10,7 @@
                 aria-current="true"
             >
                 <i class="fas fa-tachometer-alt fa-fw me-3"></i
-                ><span>Category</span>
+                ><span>Genel Gider Tipleri</span>
             </a>
             <a
                 class="list-group-item list-group-item-action py-2 ripple  {{(request()->segment(2) == 'user') ? 'active' : ''}}"

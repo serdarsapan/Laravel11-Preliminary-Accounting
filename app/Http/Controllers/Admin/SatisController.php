@@ -77,13 +77,20 @@ class SatisController extends Controller
     }
 
     public function update(SatisRequest $request, $id)
-    {
+    {   
+        $duzenlemeTarihParts = explode('/', $request->duzenlemeTarih);
+        if (count($duzenlemeTarihParts) === 3) {
+            $duzenlemeTarih = $duzenlemeTarihParts[2] . '-' . $duzenlemeTarihParts[1] . '-' . $duzenlemeTarihParts[0];
+        } else {
+            return back()->withErrors(['duzenlemeTarih' => 'Invalid date format.']);
+        }
+       
         $satis = Satis::find($id);
         if ($satis) {
             $satis->update([
                 'cari' => $request->cari,
                 'cariAdres' => $request->cariAdres,
-                'duzenlemeTarih' => $request->duzenlemeTarih,
+                'duzenlemeTarih' => $duzenlemeTarih,
                 'duzenlemeSaat' => $request->duzenlemeSaat,
                 'seriNo' => $request->seriNo,
                 'odemeStatus' => $request->odemeStatus,

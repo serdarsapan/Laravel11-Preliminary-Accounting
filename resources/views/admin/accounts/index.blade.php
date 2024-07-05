@@ -23,7 +23,6 @@
                                 <th>Banka - Şube</th>
                                 <th>IBAN</th>
                                 <th>Açılış Tarihi</th>
-                                <th>Para Birimi</th>
                                 <th>Bakiye</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
@@ -38,8 +37,7 @@
                                         <td>{{ $account->bankName }} {{ $account->branch }}</td>
                                         <td>{{ $account->iban }}</td>
                                         <td>{{ $account->oDate }}</td>
-                                        <td>{{ $account->currency }}</td>
-                                        <td>{{ $account->balance }}</td>
+                                        <td>{{ $account->balance ?? '-' }} {{ $account->currency }}</td>
                                         
                                         <td><a href="{{ route('accounts.edit', $account->id) }}" class="btn btn-primary">Edit</a></td>
                                         <td>

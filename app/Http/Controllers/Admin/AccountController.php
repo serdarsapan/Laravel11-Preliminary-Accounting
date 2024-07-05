@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AccountRequest;
 use App\Models\Account;
-use App\Models\BlogCategory;
+use App\Models\BlogSatis;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -37,6 +37,7 @@ class AccountController extends Controller
 
        Account::create([
         'name' => $request->name,
+        'tags' => $request->tags,
         'iban' => $request->iban,
         'description' => $request->description,
         'bankName' => $request->bankName,
@@ -62,9 +63,8 @@ class AccountController extends Controller
     {
         $account = Account::find($id);
         $categories = Category::pluck('name','id');
-        $selectedCategory = BlogCategory::whereBlogId($id)->pluck('category_id')->toArray();
 
-        return view('admin.accounts.edit', compact('categories','selectedCategory','account'));
+        return view('admin.accounts.edit', compact('categories','account'));
     }
 
     public function update(AccountRequest $request, $id)
@@ -73,6 +73,7 @@ class AccountController extends Controller
         if ($account) {
             $account->update([
                 'name' => $request->name,
+                'tags' => $request->tags,
                 'iban' => $request->iban,
                 'description' => $request->description,
                 'bankName' => $request->bankName,

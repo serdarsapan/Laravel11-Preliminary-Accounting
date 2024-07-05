@@ -33,12 +33,13 @@
                             @method('PUT')
                         @endif
                             <div class="form-group">
-                            <label for="cari" class="label-spe">Cari*</label>
+                            <label for="cari" class="label-spe">Cari</label>
+                            <sup style="font-style: normal; font-weight: bold; color: #428bca">*</sup>
                             <input type="text" class="form-control" id="cari" name="cari"
                                    value="{{ $gider->cari ?? '' }}" onblur="path();">
                         </div>
                         <div class="form-group mt-2">
-                            <label for="cariAdres" class="label-spe">Cari Adresi*</label>
+                            <label for="cariAdres" class="label-spe">Cari Adresi</label>
                             <input type="text" class="form-control" id="cariAdres" name="cariAdres"
                                    value="{{ $gider->cariAdres ?? '' }}" onblur="path();">
                         </div>
@@ -59,17 +60,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group mt-2">
+                        <div class="row mt-2">
+                        <div class="form-group col-md-4">
                             <label for="giderTip" class="label-spe">Gider Tipi</label>
-                            <select name="category[]" id="" class="form-control js-example-basic-single">
+                            <sup style="font-style: normal; font-weight: bold; color: #428bca">*</sup>
+                            <select name="giderTip" id="giderTip" class="form-control">
                                 @foreach($categories as $id=>$name)
                                     @if(!isset($selectedCategory))
                                         <option {{ in_array($id,$selectedCategory) ? selected :  null}} value="{{ $name->id }}">{{ $name->name }}</option>
                                     @else
-                                        <option value="{{ $name->id }}">{{ $name->name }}</option>
+                                        <option value="{{ $name->name }}">{{ $name->name }}</option>
                                     @endif
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12 form-group mt-4">
+                        <a href="{{ route('category.create') }}" class="btn btn-info">Gider Tipi Ekle</a>
+                        </div>
                         </div>
                         <div class="form-group mt-2 col-md-2 col-sm-6 col-xs-12">
                             <label for="odemeStatus" class="label-spe">Ödeme Durumu</label>
@@ -102,8 +109,8 @@
                             </div>
                         <div class="row">
                         <div class="col-md-2 col-sm-6 col-xs-12 form-group mt-2">
-                                <label for="vadeTarih" class="label-spe">Vade Tarihi</label>
-                                <select class="form-control" name="vadeTarih" id="vadeTarih">
+                                <label for="sonOdeme" class="label-spe">Vade Tarihi</label>
+                                <select class="form-control" name="sonOdeme" id="sonOdeme">
                                     <option value="0">Vade Günü Girilmemiştir</option>
                                     <option value="7">7 Gün Vade</option>
                                     <option value="15">15 Gün Vade</option>
@@ -132,14 +139,14 @@
                                     value="{{ $gider->araToplam ?? '' }}"/>
                             </div>
                             <div class="col-md-2 col-sm-6 col-xs-12 form-group">
-                                <label for="kdv" class="label-spe">KDV Oranı</label>
+                                <label for="kdv" class="label-spe">KDV Oranı %</label>
                                 <input type="text" class="form-control" name="kdv" id="kdv" 
                                       placeholder="0.00" value="{!! $gider->kdv ?? '' !!}"/>
                             </div>
                             <div class="col-md-2 col-sm-6 col-xs-12 form-group">
                                 <label for="sumKdv" class="label-spe">Toplam KDV</label>
                                 <input type="text" class="form-control" name="sumKdv" id="sumKdv" 
-                                      placeholder="0.00" value="{!! $gider->sumKdv ?? '' !!}" readonly/>
+                                      placeholder="0.00" value="{!! $gider->sumKdv ?? '' !!}"/>
                             </div>
                             <div class="col-md-2 col-sm-6 col-xs-12 form-group">
                                 <label for="incSumKdv" class="label-spe">Toplam KDV</label>
@@ -151,7 +158,7 @@
                                 <input type="text" class="form-control" name="digerVergi" id="digerVergi" 
                                       placeholder="0.00" value="{!! $gider->digerVergi ?? '' !!}" />
                             </div>
-                         <div class="row mt-2">
+                         <div class="row mt-5 justify-content-end">
                          <div class="col-md-2 col-sm-6 col-xs-12 form-group">
                                 <label for="faturaTutar" class="label-spe">Genel Toplam</label>
                                 <input type="text" class="form-control" name="faturaTutar" id="faturaTutar" 
@@ -165,15 +172,10 @@
                             <a href="{{ route('gider.index') }}" class="btn btn-light">Cancel</a>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('custom_js')
 <script>
-        
         // var birimVal = 0;
         // var miktarVal = 0;
         // var birimMiktar = 0;
@@ -197,36 +199,36 @@
         //     $("#sumKdv").val(sumKdv);
         //     $("#incSumKdv").val(incSumKdv);
         // });
-
-        var birimVal = 0;
-    var miktarVal = 0;
-    var birimMiktar = 0;
-    var kdvSonuc = 0;
+    var araToplam = 0;
+    var faturaTutar = 0;
+    var kdv = 0;
     var sumKdv = 0;
     var incSumKdv = 0;
 
     // Herhangi bir input değişikliğinde çalışacak genel bir event listener
     $(document).on('input', '.calculate input:not(#incSumKdv)', function(){
         // Birim fiyat ve miktar inputlarındaki değişiklikler için
-        miktarVal = parseInt($("#miktar").val()) || 0; // Varsayılan değer 0
-        birimVal = parseInt($("#birimFiyat").val()) || 0; // Varsayılan değer 0
-        birimMiktar = birimVal * miktarVal;
-
-        $("#excSumKdv").val(birimMiktar);
+        araToplam = parseInt($("#araToplam").val()) || 0; // Varsayılan değer 0
+        faturaTutar = parseInt($("#faturaTutar").val()) || 0; // Varsayılan değer 0
+        digerVergi = parseInt($("#digerVergi").val()) || 0;
 
         // KDV inputundaki değişiklikler için
-        var kdv = $("#kdv option:selected").val() || 0; // Varsayılan değer 0
-        sumKdv = birimMiktar * (kdv / 100);
-        incSumKdv = birimMiktar + sumKdv;
+        var kdv = $("#kdv").val() || 0; // Varsayılan değer 0
+        sumKdv = araToplam * (kdv / 100);
+        incSumKdv = araToplam + sumKdv;
+        
+        digerKdv = incSumKdv + digerVergi;
+        faturaTutar = digerKdv;
 
         $("#sumKdv").val(sumKdv);
         $("#incSumKdv").val(incSumKdv);
+        $("#faturaTutar").val(faturaTutar);
     });
 
     $(document).on('change', '#kdv', function() {
-        var kdv = $("#kdv option:selected").val() || 0;
-        sumKdv = birimMiktar * (kdv / 100);
-        incSumKdv = birimMiktar + sumKdv;
+        var kdv = $("#kdv").val() || 0;
+        sumKdv = araToplam * (kdv / 100);
+        incSumKdv = araToplam + sumKdv;
 
         $("#sumKdv").val(sumKdv);
         $("#incSumKdv").val(incSumKdv);
@@ -234,18 +236,14 @@
 
     $(document).on('input', '#incSumKdv', function() {
 
-        if($("#miktar").val() > 0) {
+        
             incSumKdv = parseFloat($("#incSumKdv").val()) || 0;
-        var kdv = parseFloat($("#kdv option:selected").val()) || 0;
+        var kdv = parseFloat($("#kdv").val()) || 0;
 
         sumKdv = incSumKdv / (1 + (kdv / 100)) * (kdv / 100);
-        birimMiktar = incSumKdv - sumKdv;
-        birimVal = birimMiktar / miktarVal;
 
         $("#sumKdv").val(sumKdv);
-        $("#excSumKdv").val(birimMiktar);
-        $("#birimFiyat").val(birimVal);
-        }
+        
     
     });
 
@@ -267,9 +265,9 @@
 $('#duzenlemeTarih').val(getCurrentDate());
   
 
-    $(document).on('change', '#vadeTarih', function() {
-        var vadeTarih = $("#vadeTarih option:selected").val() || 0;
-        $("#vadeTarih").val(vadeTarih);
+    $(document).on('change', '#sonOdeme', function() {
+        var sonOdeme = $("#sonOdeme option:selected").val() || 0;
+        $("#sonOdeme").val(sonOdeme);
     });
 
     $(document).ready(function() {

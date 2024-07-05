@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogRequest;
 use App\Models\Blog;
-use App\Models\BlogCategory;
+use App\Models\BlogSatis;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -65,7 +65,7 @@ class BlogController extends Controller
     {
         $blog = Blog::find($id);
         $categories = Category::pluck('name','id');
-        $selectedCategory = BlogCategory::whereBlogId($id)->pluck('category_id')->toArray();
+        $selectedCategory = BlogSatis::whereBlogId($id)->pluck('category_id')->toArray();
 
         return view('admin.blogs.edit', compact('categories','selectedCategory','blog'));
     }
