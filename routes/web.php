@@ -28,12 +28,12 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function () {
     Route::get('/cari/create', '\App\Http\Controllers\Admin\CariController@create')->name('cari.create');
     Route::post('/cari', '\App\Http\Controllers\Admin\CariController@store')->name('cari.store');
     Route::get('/cari/{id}', '\App\Http\Controllers\Admin\CariController@show')->name('cari.show');
-    Route::get('/cari/edit/{id}', '\App\Http\Controllers\Admin\CariController@edit')->name('cari.edit');
+    Route::get('/cari/edit', '\App\Http\Controllers\Admin\CariController@edit')->name('cari.edit');
     Route::put('/cari/{id}', '\App\Http\Controllers\Admin\CariController@update')->name('cari.update');
     Route::delete('/cari/{id}', '\App\Http\Controllers\Admin\CariController@destroy')->name('cari.destroy');
 
     //Cari Detay
-    Route::get('/cariDetay', '\App\Http\Controllers\Admin\CariController@cariDetay')->name('cariDetay');
+    Route::get('/cari/cariDetay', '\App\Http\Controllers\Admin\CariController@cariDetay')->name('cariDetay');
     
     //Satış Fatura
     Route::get('/satis', '\App\Http\Controllers\Admin\SatisController@index')->name('satis.index');

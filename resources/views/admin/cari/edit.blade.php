@@ -27,7 +27,7 @@
                             $routeLink = route('cari.store');
                         @endphp
                     @endif
-                    <form action="{{ $routeLink }}" method="POST" class="forms-sample" enctype="multipart/form-data" id="1">
+                    <form action="{{ $routeLink }}" method="POST" class="forms-sample" enctype="multipart/form-data">
                         @csrf
                         @if(!empty($cari->id))
                             @method('PUT')
@@ -192,7 +192,7 @@
 
 function redirectToNextPage(event) {
             event.preventDefault(); // Formun submit edilmesini engeller
-            window.location.href = "/admin/cariDetay"; // Yönlendirmek istediğiniz sayfanın URL'si
+            window.location.href = "cariDetay"; // Yönlendirmek istediğiniz sayfanın URL'si
         }
 
    $(function() {

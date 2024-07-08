@@ -21,8 +21,8 @@ class CariController extends Controller
 
     public function create(Request $request)
     {
-        $cari = Cari::get();
-        return view('admin.cari.edit')->with('cari',$cari);
+        
+        return view('admin.cari.edit');
     }
 
     public function store(CariRequest $request)
@@ -154,6 +154,52 @@ class CariController extends Controller
 
     public function cariDetay()
     {
-        return view('admin.cariDetay.edit');
+        return view('admin.cari.cariDetay');
+    }
+
+    public function submit(Request $request)
+    {
+        // Form verilerini işleyin
+        $cari = $request->validate([
+            'cariStatus' => 'string|max:255',
+            'code' => 'string|max:255',
+            'name' => 'string|max:255',
+            'type' => 'string|max:255',
+            'islemTarih' => 'string|max:255',
+            'tags' => 'string|max:255',
+            'tckn' => 'string|max:255',
+            'vergiDaire' => 'string|max:255',
+            'mersis' => 'string|max:255',
+            'tel' => 'string|max:255',
+            'mail' => 'string|max:255',
+            'web' => 'string|max:255',
+            'faks' => 'string|max:255',
+            'adresTip' => 'string|max:255',
+            'adres' => 'string|max:255',
+            'il' => 'string|max:255',
+            'ilce' => 'string|max:255',
+            'posta' => 'string|max:255',
+            'vade' => 'string|max:255',
+            'iskonto' => 'string|max:255',
+            'acilisStatus' => 'string|max:255',
+            'islemTarihAcilis' => 'string|max:255',
+            'vadeTarihAcilis' => 'string|max:255',
+            'tutarBorc' => 'string|max:255',
+            'borcStatus' => 'string|max:255',
+            'islemTarihBorc' => 'string|max:255',
+            'vadeTarihBorc' => 'string|max:255',
+            'description' => 'string|max:255',
+            'hesapNo' => 'string|max:255',
+            'branch' => 'string|max:255',
+            'bank' => 'string|max:255',
+            'iban' => 'string|max:255',
+            'hesapName' => 'string|max:255',
+            'yetkiliTel' => 'string|max:255',
+            'yetkiliMail' => 'string|max:255',
+            'yetkiliName' => 'string|max:255',
+        ]);
+
+        // İşlem sonrasında bir geri dönüş yapın
+
     }
 }

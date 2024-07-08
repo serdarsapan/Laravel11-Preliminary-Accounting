@@ -27,7 +27,7 @@
                             $routeLink = route('cari.store');
                         @endphp
                     @endif
-                    <form action="{{ $routeLink }}" method="POST" class="forms-sample" enctype="multipart/form-data" id="2">
+                    <form action="{{ $routeLink }}" method="POST" class="forms-sample" enctype="multipart/form-data">
                         @csrf
                         @if(!empty($cari->id))
                             @method('PUT')
@@ -36,10 +36,10 @@
                             <h4 class="mb-20 ml-10 text-primary">Vade Bilgileri</h4>
                             <div class="row mb-4">
                             <div class="form-group col-md-2">
-                            <label for="vade">Vade Günü</label>
+                            <label for="vadeS">Vade Günü</label>
                             <div>
-                                <label for="yok">Yok <input type="radio" value="0" name="vade" checked/></label>
-                                <label for="var">Var <input type="radio" value="1" name="vade"/></label>
+                                <label for="yok">Yok <input type="radio" value="0" name="vadeS" checked/></label>
+                                <label for="var">Var <input type="radio" value="1" name="vadeS"/></label>
                             </div>
                             </div>
                             <div class="col-md-2 col-sm-6 col-xs-12 form-group vade">
@@ -59,10 +59,10 @@
                             <h4 class="mb-20 ml-10 text-primary">Diğer Bilgiler</h4>
                             <div class="row mb-4">
                             <div class="form-group col-md-2">
-                            <label for="iskonto">Sabit İskonto</label>
+                            <label for="iskontoS">Sabit İskonto</label>
                             <div>
-                                <label for="yok">Yok <input type="radio" value="0" name="iskonto" checked/></label>
-                                <label for="var">Var <input type="radio" value="1" name="iskonto"/></label>
+                                <label for="yok">Yok <input type="radio" value="0" name="iskontoS" checked/></label>
+                                <label for="var">Var <input type="radio" value="1" name="iskontoS"/></label>
                             </div>
                             </div>
                             <div class="col-md-2 col-sm-6 col-xs-12 form-group iskonto">
